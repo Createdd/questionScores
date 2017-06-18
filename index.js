@@ -1,5 +1,16 @@
 import React from 'react';
 import { render } from 'react-dom';
-import Scoreboard from './src/containers/Scoreboard';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 
-render(<Scoreboard />, document.getElementById('root'));
+import Scoreboard from './src/containers/Scoreboard';
+import QuestionReducer from './src/reducers/question';
+
+const store = createStore(QuestionReducer);
+
+render(
+  <Provider store={store}>
+    <Scoreboard />
+  </Provider>,
+	document.getElementById('root'),
+);
