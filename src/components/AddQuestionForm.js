@@ -10,16 +10,16 @@ export default class AddQuestionForm extends React.Component {
 		this.setState({ name });
 	};
 
-	onSubmit = e => {
+	addQuestion = e => {
 		if (e) e.preventDefault();
-		this.props.onAdd(this.state.name);
+		this.props.addQuestion(this.state.name);
 		this.setState({ name: '' });
 	};
 
 	render() {
 		return (
 			<div className="add-question-form">
-				<form onSubmit={this.onSubmit}>
+				<form onSubmit={this.addQuestion}>
 					<input
 						type="text"
 						value={this.state.name}
@@ -34,5 +34,5 @@ export default class AddQuestionForm extends React.Component {
 }
 
 AddQuestionForm.propTypes = {
-	onAdd: PropTypes.func.isRequired,
+	addQuestion: PropTypes.func.isRequired,
 };

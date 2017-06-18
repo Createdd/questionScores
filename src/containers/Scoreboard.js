@@ -1,62 +1,49 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import AddQuestionForm from '../components/AddQuestionForm';
 import Header from '../components/Header';
 import Question from '../components/Question';
+import * as QuestionActionCreators from '../actions/question';
 
-export default class Scoreboard extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			questions: [
-				{
-					name: 'Do you like AI?',
-					score: 31,
-				},
-				{
-					name: 'Do you like Engineering?',
-					score: 20,
-				},
-				{
-					name: 'How many Redux Apps?',
-					score: 50,
-				},
-			],
-		};
-	}
-
-	onScoreChange = (index, delta) => {
-		this.state.questions[index].score += delta;
-		this.setState(this.state);
-	};
-
-	onAddQuestion = name => {
-		this.state.questions.push({ name, score: 0 });
-		this.setState(this.state);
-	};
-
-	onRemoveQuestion = index => {
-		this.state.questions.splice(index, 1);
-		this.setState(this.state);
+class Scoreboard extends React.Component {
+	static PropTypes = {
+		questions: PropTypes.array.isRequired,
 	};
 
 	render() {
+		const { dispatch, questions } = this.props;
+		const addQuestion = bindActionCreators(QuestionActionCreators.addQuestion, dispatch);
+		const removeQuestion = bindActionCreators(QuestionActionCreators.removeQuestion, dispatch);
+		const updateQuestionScore = bindActionCreators(
+			QuestionActionCreators.updateQuestionScore,
+			dispatch,
+		);
+
+		const questionComponents = questions.map((question, index) =>
+			<Question
+				index={index}
+				name={question.name}
+				score={question.score}
+				key={question.name}
+				updateQuestionScore={updateQuestionScore}
+				removeQuestion={removeQuestion}
+			/>,
+		);
+
 		return (
 			<div className="scoreboard">
-				<Header questions={this.state.questions} />
+				<Header questions={questions} />
 				<div className="questions">
-					{this.state.questions.map((question, index) =>
-						<Question
-							name={question.name}
-							score={question.score}
-							key={question.name}
-							onScoreChange={delta => this.onScoreChange(index, delta)}
-							onRemove={() => this.onRemoveQuestion(index)}
-						/>,
-					)}
+					{questionComponents}
 				</div>
-				<AddQuestionForm onAdd={this.onAddQuestion} />
+				<AddQuestionForm addQuestion={addQuestion} />
 			</div>
 		);
 	}
 }
+
+const mapStateToProps = state => ({ questions: state });
+
+export default connect(mapStateToProps)(Scoreboard);

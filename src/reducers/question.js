@@ -32,7 +32,7 @@ export default function Question(state = initialState, action) {
         if (index === action.index) {
           return {
             ...question,
-            score: question.score + question.score,
+            score: question.score + action.score,
           };
         }
         return question;
