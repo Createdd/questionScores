@@ -15,9 +15,9 @@ const initialState = [
   },
 ];
 
-export default function Player(state = initialState, action) {
+export default function Question(state = initialState, action) {
   switch (action.type) {
-    case QuestionActionTypes.ADD_PLAYER:
+    case QuestionActionTypes.ADD_QUESTION:
       return [
         ...state,
         {
@@ -26,7 +26,7 @@ export default function Player(state = initialState, action) {
         },
       ];
     case QuestionActionTypes.REMOVE_QUESTION:
-      return [...state.slice(0, action.index), ...state.sclice(action.index + 1)];
+      return [...state.slice(0, action.index), ...state.slice(action.index + 1)];
     case QuestionActionTypes.UPDATE_QUESTION_SCORE:
       return state.map((question, index) => {
         if (index === action.index) {
