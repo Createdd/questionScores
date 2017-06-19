@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 
 import Scoreboard from './src/containers/Scoreboard';
-import QuestionReducer from './src/reducers/question';
+import QuestionReducer from './src/ducks/question';
 
 const store = createStore(
 	QuestionReducer,

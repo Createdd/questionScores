@@ -6,7 +6,7 @@ import AddQuestionForm from '../components/AddQuestionForm';
 import Header from '../components/Header';
 import Question from '../components/Question';
 import QuestionDetail from '../components/QuestionDetail';
-import * as QuestionActionCreators from '../actions/question';
+import * as QuestionActionCreators from '../ducks/question';
 
 class Scoreboard extends React.Component {
 	static PropTypes = {
