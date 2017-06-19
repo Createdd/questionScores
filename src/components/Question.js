@@ -4,7 +4,7 @@ import Counter from './Counter';
 
 const Question = props =>
   (<div className="question">
-    <div className="question-name">
+    <div className="question-name" onClick={() => props.selectQuestion(props.index)}>
       <a className="remove-question" onClick={() => props.removeQuestion(props.index)}>✖</a>
       {props.name}
     </div>
@@ -22,6 +22,7 @@ Question.propTypes = {
   score: PropTypes.number.isRequired,
   index: PropTypes.number.isRequired,
   removeQuestion: PropTypes.func.isRequired,
+  selectQuestion: PropTypes.func.isRequired,
   updateQuestionScore: PropTypes.func.isRequired,
 };
 

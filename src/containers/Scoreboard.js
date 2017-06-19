@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import AddQuestionForm from '../components/AddQuestionForm';
 import Header from '../components/Header';
 import Question from '../components/Question';
+import QuestionDetail from '../components/QuestionDetail';
 import * as QuestionActionCreators from '../actions/question';
 
 class Scoreboard extends React.Component {
@@ -13,13 +14,19 @@ class Scoreboard extends React.Component {
 	};
 
 	render() {
-		const { dispatch, questions } = this.props;
+		const { dispatch, questions, selectedQuestionIndex } = this.props;
 		const addQuestion = bindActionCreators(QuestionActionCreators.addQuestion, dispatch);
 		const removeQuestion = bindActionCreators(QuestionActionCreators.removeQuestion, dispatch);
 		const updateQuestionScore = bindActionCreators(
 			QuestionActionCreators.updateQuestionScore,
 			dispatch,
 		);
+		const selectQuestion = bindActionCreators(QuestionActionCreators.selectQuestion, dispatch);
+
+		let selectedQuestion;
+		if (selectedQuestionIndex !== -1) {
+			selectedQuestion = questions[selectedQuestionIndex];
+		}
 
 		const questionComponents = questions.map((question, index) =>
 			<Question
@@ -29,6 +36,7 @@ class Scoreboard extends React.Component {
 				key={question.name}
 				updateQuestionScore={updateQuestionScore}
 				removeQuestion={removeQuestion}
+				selectQuestion={selectQuestion}
 			/>,
 		);
 
@@ -39,11 +47,17 @@ class Scoreboard extends React.Component {
 					{questionComponents}
 				</div>
 				<AddQuestionForm addQuestion={addQuestion} />
+				<div className="question-detail">
+					<QuestionDetail selectedQuestion={selectedQuestion} />
+				</div>
 			</div>
 		);
 	}
 }
 
-const mapStateToProps = state => ({ questions: state });
+const mapStateToProps = state => ({
+	questions: state.questions,
+	selectedQuestionIndex: state.selectedQuestionIndex,
+});
 
 export default connect(mapStateToProps)(Scoreboard);

@@ -7,8 +7,9 @@ import Scoreboard from './src/containers/Scoreboard';
 import QuestionReducer from './src/reducers/question';
 
 const store = createStore(
-  QuestionReducer, 
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+	QuestionReducer,
+	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+);
 
 render(
   <Provider store={store}>

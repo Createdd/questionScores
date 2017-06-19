@@ -15,3 +15,8 @@ export const updateQuestionScore = (index, score) => ({
   index,
   score,
 });
+
+export const selectQuestion = index => ({
+  type: QuestionActionTypes.SELECT_QUESTION,
+  index,
+});
